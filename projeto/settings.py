@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'recipes',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +55,10 @@ ROOT_URLCONF = 'projeto.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # 'DIRS': [], // para funcionar heranças do base_templates
+        'DIRS': [
+            BASE_DIR / 'base_templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,9 +119,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+# Carregue o diretorio Static, css, js etc, pode ver na documentação do djago
 STATIC_URL = 'static/'
 
+# Para carregar um arquivo no diretorio criado, global
+STATICFILES_DIRS = [
+    BASE_DIR / 'base_static',
+]
+
+# Criar um static global na raiz
+STATIC_ROOT = BASE_DIR / 'static'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+
+# Cuidado com os nomes, sempre usar name spaces, para não coledir nomes. nomes iguais colidem
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
