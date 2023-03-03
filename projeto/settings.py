@@ -55,7 +55,7 @@ ROOT_URLCONF = 'projeto.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'DIRS': [], // para funcionar heranças do base_templates
+        # ** 'DIRS': [], // para funcionar heranças do base_templates
         'DIRS': [
             BASE_DIR / 'base_templates',
         ],
@@ -119,16 +119,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-# Carregue o diretorio Static, css, js etc, pode ver na documentação do djago
+# ** Carregue o diretorio Static, css, js etc, pode ver na documentação do djago
 STATIC_URL = 'static/'
 
-# Para carregar um arquivo no diretorio criado, global
+# ** Para carregar um arquivo no diretorio criado, global
 STATICFILES_DIRS = [
     BASE_DIR / 'base_static',
 ]
 
-# Criar um static global na raiz
+# ** Criar um static global na raiz
 STATIC_ROOT = BASE_DIR / 'static'
+
+# ** Para Salvar arquivos que o usuario podera enviar
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 

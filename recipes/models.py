@@ -6,10 +6,17 @@ from django.db import models
 # 3° Criar o arquivo no diretorio o 0001_initial.py "py manage.py makemigrations", nunca apague de forma manual
 # 4° Criar na base de dados "py manage.py migrate"
 
+# Para acessar a area adimn com interface:
+# Criar um usuario  "py manage.py creatsuperusser"
+# Ir no arquivo admin.py
+
 
 class Category(models.Model):
     name = models.CharField(max_length=65)
 
+    # Para aparecer um nome no painel admin do django
+    def __str__(self):
+        return self.name
 # tabela
 
 
@@ -27,16 +34,22 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
-    cover = models.ImageField(upload_to='recipes/covers/%Y/%m/%d/')
+    cover = models.ImageField(
+        upload_to='recipes/covers/%Y/%m/%d/', blank=True, default='')
+    # cover = models.ImageField(upload_to='recipes/covers/%Y/%m/%d/')
     # relação entre as 2 tabelas
     category = models.ForeignKey(
         # on_delete -> Quando eu apagar a categoria, vai setar null para evitar erros
-        Category, on_delete=models.SET_NULL, null=True
+        Category, on_delete=models.SET_NULL, null=True, blank=True,
+        default=None,
     )
     # relação do import acima
     author = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True
     )
+
+    def __str__(self):
+        return self.title
 
 
 # EDITED
