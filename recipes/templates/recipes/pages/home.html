@@ -14,11 +14,38 @@
     {% include 'recipes/partials/recipe.html' %}
     {% include 'recipes/partials/recipe.html' %} -->
     <!-- Obs importante recipe.html são chamdos os argumentos com o recipe. , pois 
-    pegado do recipe in dentro do recipes-->
+    pegado do recipe in dentro do recipes
     {% for recipe in recipes %}
         {% if recipe.is_published %}
             {% include 'recipes/partials/recipe.html' %}
-        {% endif %}
+        {% endif %} 
+    {% endfor %} -->
+    {% for recipe in page_obj %}
+    {% include 'recipes/partials/recipe.html' %}
+    {% empty %}
+        <div class="center m-y">
+            <h1>No recipes found here 😌</h1>
+        </div>
     {% endfor %}
+    
 </div>
+<ul class="d-flex justify-content-center pagination ">
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in page_obj.paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+</ul>
 {% endblock content %}

@@ -1,31 +1,35 @@
 # from django.http import Http404, HttpResponse
 # from utils.recipes.factory import make_recipe
-from django.shortcuts import get_list_or_404, render
+import os
 
 # Importar model .models, pq esta dentro da mesmo diretorio
+from django.core.paginator import Paginator
+from django.shortcuts import get_list_or_404, render
+
 from recipes.models import Recipe
 
-# from utils.recipes.factory import make_recipe
+PER_PAGE = int(os.environ.get('PER_PAGE', 2))
 
 
-# Para teste importado do factory#
 # def home(request):
-#   return render(request, 'recipes/pages/home.html', context={
-#       'recipes': [make_recipe() for _ in range(9)],
-#   })
 
-# def recipe(request, id):
-#   return render(request, 'recipes/pages/recipe-view.html', context={
-#      'recipe': make_recipe(),
-#     'is_detail_page': True,
-#  })
+#     keywords = Posts.objects.filter(
+#         is_published=True,
+#     ).order_by('-id')
+#     paginator = Paginator(keywords, PER_PAGE)  # Show 25 contacts per page.
+#     page_number = request.GET.get("page")
+#     page_obj = paginator.get_page(page_number)
+
+#     return render(request, "blog/pages/home.html", {"page_obj": page_obj})
 
 
 def home(request):
-    recipes = Recipe.objects.all().order_by('-id')
-    return render(request, 'recipes/pages/home.html', context={
-        'recipes': recipes,
-    })
+    keywords = Recipe.objects.all().order_by('-id')
+    paginator = Paginator(keywords, PER_PAGE)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'recipes/pages/home.html', {"page_obj": page_obj})
 
 
 # def category(request, category_id):
